@@ -1,0 +1,41 @@
+import discord
+import random
+import os
+from discord.ext import commands
+tips=["Пластик не удобрение,земле не понравиться","Не мусори, будет чисто и природе приятно","Дойти до мусорки не марофон бежать, выбрасывайте мусор в мусорку","Сортировать мусор не уравнение решать,Сортируйте мусор","Не устраивай в лесу опыты, лес не лаборатория","Лес работает на тебя, а ты его портишь. Не делай так"]
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+#@bot.command()
+#async def info(ctx):
+#    await ctx.send('Все команды начинаються с символа"$". существующие команды на данный момент: "hello" -,"number","meme",""')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send('Привет')
+
+@bot.command()
+async def number(ctx, a:int=0, b:int=2):
+    await ctx.send(random.randint(a,b))
+
+@bot.command()
+async def meme(ctx):
+    list_of_files= os.listdir('memes')
+    
+    with open('memes/'+ random.choise(list_of_files),'rb') as f:
+        pic=discord.File(f)
+    await ctx.send(file=pic)
+
+@bot.command()
+async def tip(ctx):
+    t=random.choice(tips)
+    await ctx.send(t)
+
+bot.run("MTI3NzI1OTg4NDE4NTkxMTI5Nw.GUVH6W.3jp9OR3iorOu8L-3sL4JYZkfgyC8ndX8qpxCDA")
